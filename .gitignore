@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data — large/generated files
+data/raw/
+data/processed/
+data/exports/
+
+# Logs
+*.log
+logs/
+
+# LaTeX build artifacts
+report/**/*.aux
+report/**/*.log
+report/**/*.out
+report/**/*.toc
+
+# Proxy / credentials
+.env.*
+# Keep the tracked template (no secrets) — copy it to .env
+!.env.example
+secrets.yaml
+secrets.json
+config/secrets.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# agents
+_plans/
+.claude/audit.jsonl
+.codex/audit.jsonl
+
+# Claude Code session lock (not for VCS)
+.claude/scheduled_tasks.lock
