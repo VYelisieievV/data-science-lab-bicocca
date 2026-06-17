@@ -28,14 +28,13 @@ ENV/
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
-# Data — large/generated files
-data/raw/
-data/processed/
-data/exports/
 
 # Logs
 *.log
 logs/
+
+# Raw datasets too large for normal GitHub storage
+data/raw/V-Dem/V-Dem-CY-Full+Others-v16.csv
 
 # LaTeX build artifacts
 report/**/*.aux
