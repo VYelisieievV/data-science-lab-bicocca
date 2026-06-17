@@ -66,6 +66,65 @@ than assuming a fixed end year:
 vparty.select(pl.min("year"), pl.max("year"))
 ```
 
+### DuckDB
+
+The two raw CSVs can also be loaded into a local DuckDB database through Docker.
+The setup uses the official `duckdb/duckdb:1.5.4` image. The generated database
+lives at `data/duckdb/vdem.duckdb` and is ignored by git.
+
+Expected local CSV paths:
+
+- `data/raw/V-Dem/V-Dem-CY-Full+Others-v16.csv`
+- `data/raw/V-Party/V-Dem-CPD-Party-V2.csv`
+
+Import the CSVs into DuckDB and open a DuckDB shell:
+
+```bash
+docker compose run --rm duckdb
+```
+
+This command uses the default Compose command:
+
+```bash
+/duckdb /data/duckdb/vdem.duckdb -init /duckdb-init/init.sql
+```
+
+`docker/duckdb/init.sql` recreates the raw tables from the CSVs every time this
+command runs.
+
+The import recreates these tables:
+
+- `raw.vdem_country_year`
+- `raw.vparty_country_party_date`
+
+Useful checks inside the DuckDB shell:
+
+```sql
+SELECT * FROM meta.import_summary;
+SELECT * FROM meta.analysis_window;
+```
+
+Import the CSVs and run a SQL query directly from the terminal:
+
+```bash
+docker compose run --rm duckdb /data/duckdb/vdem.duckdb \
+  -init /duckdb-init/init.sql \
+  -c "SELECT * FROM meta.import_summary;"
+```
+
+Run a SQL query against the existing database without rerunning the import:
+
+```bash
+docker compose run --rm duckdb /data/duckdb/vdem.duckdb \
+  -c "SELECT * FROM meta.import_summary;"
+```
+
+Open the existing database without rerunning the import:
+
+```bash
+docker compose run --rm duckdb /data/duckdb/vdem.duckdb
+```
+
 ## Methodology
 
 1. Build the country-year panel and aggregate party-level populism to the

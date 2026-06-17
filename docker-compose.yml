@@ -1,0 +1,17 @@
+services:
+  duckdb:
+    image: duckdb/duckdb:1.5.4
+    container_name: data-science-lab-duckdb
+    working_dir: /workspace
+    volumes:
+      - ./data/raw:/data/raw:ro
+      - ./data/duckdb:/data/duckdb
+      - ./docker/duckdb:/duckdb-init:ro
+    entrypoint:
+      - /duckdb
+    command:
+      - /data/duckdb/vdem.duckdb
+      - -init
+      - /duckdb-init/init.sql
+    stdin_open: true
+    tty: true

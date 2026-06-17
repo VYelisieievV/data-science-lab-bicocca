@@ -36,6 +36,9 @@ logs/
 # Raw datasets too large for normal GitHub storage
 data/raw/V-Dem/V-Dem-CY-Full+Others-v16.csv
 
+# Generated local DuckDB database
+data/duckdb/
+
 # LaTeX build artifacts
 report/**/*.aux
 report/**/*.log
