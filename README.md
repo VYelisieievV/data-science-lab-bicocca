@@ -12,7 +12,7 @@ party power is associated with political corruption using the **V-Dem** and
     height="220"
   />
   <img
-    src="https://static.politico.com/b5/7f/b05f45384e92a0f5f029d0f691e5/mag-constantini-populism.jpg"
+    src="https://c.files.bbci.co.uk/132DF/production/_100295587_thepopulists2.jpg"
     alt="Illustration about populism"
     width="360"
     height="220"
