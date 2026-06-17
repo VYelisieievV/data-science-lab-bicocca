@@ -50,20 +50,30 @@ The project uses native V-Dem and V-Party variables:
 The **V-Dem** and **V-Party** datasets are not committed because they are large
 and regenerable. Download the CSV/Stata releases from
 [v-dem.net](https://www.v-dem.net/data/the-v-dem-dataset/) and place them under
-`data/raw/`.
+`data/raw/`, then load them into DuckDB with the Docker workflow below.
 
 ```python
+import duckdb
 import polars as pl
 
-vdem = pl.read_csv("data/raw/V-Dem-CY-Full+Others-v14.csv")
+con = duckdb.connect("data/duckdb/vdem.duckdb", read_only=True)
+
+vdem = pl.read_database(
+    "SELECT * FROM raw.vdem_country_year",
+    con,
+)
+vparty = pl.read_database(
+    "SELECT * FROM raw.vparty_country_party_date",
+    con,
+)
 ```
 
-`data/raw/` is git-ignored; keep raw downloads local. After loading the
-datasets, report the actual analysis window from the downloaded releases rather
-than assuming a fixed end year:
+`data/raw/` and `data/duckdb/` are git-ignored; keep raw downloads and generated
+database files local. After loading the datasets, report the actual analysis
+window from the downloaded releases rather than assuming a fixed end year:
 
 ```python
-vparty.select(pl.min("year"), pl.max("year"))
+pl.read_database("SELECT * FROM meta.analysis_window", con)
 ```
 
 ### DuckDB
