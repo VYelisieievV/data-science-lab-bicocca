@@ -74,3 +74,39 @@ good coverage.
 **Decision rule:** if fixed-effects regression cannot beat a naive persistence baseline, lean
 into the direction/interpretation framing, where the contribution does not require a strong
 predictive result.
+
+## Section 8a — Data Description (update)
+
+- Effective analysis window: 1970–2019 (constrained by V-Party expert-coded variables starting 1970).
+- Final panel after inner join: ~8,400 country-years, 182 countries.
+- 1,629 senior governing party observations with both populism and corruption available.
+
+## Section 8b — Weaknesses (update)
+
+- V-Party expert-coded vars start in 1970, not 1900.
+- V-Party is dense only in election years (~25–41 countries/year); requires a forward-fill
+  assumption to build an annual panel.
+- Coverage ends in 2019, missing the recent populist surge (Meloni in Italy, Trump's second term,
+  etc.).
+
+## Methodology Decisions (for Section 9)
+
+- Primary measure of populist governance: `v2xpa_popul` of the senior governing party
+  (`v2pagovsup == 0`).
+- Robustness check: seat-share-weighted mean across all parties.
+- Temporal extension: forward-fill from elections to the next election.
+- Data quality filter: exclude cells with fewer than 4 coders (`_nr <= 3`).
+- Final dataset: inner join on (`country_id`, `year`), restricting the panel to 1970–2019.
+
+## Variables of Interest
+
+⚠️ **Note:** corruption variables are coded with 0 = low corruption, 1 = high corruption
+(opposite of most V-Dem indices).
+
+- `v2x_corr` — composite political corruption.
+- `v2x_execorr` — executive corruption.
+- `v2x_pubcorr` — public sector corruption.
+- `v2lgcrrpt` — legislative corruption (missing where no legislature exists).
+- `v2jucorrdc` — judicial corruption.
+- `v2xpa_popul` — populism index (V-Party).
+- `v2pagovsup` — party government status (V-Party).
