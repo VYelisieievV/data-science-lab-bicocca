@@ -103,12 +103,13 @@ predictive result.
 - Distribution: N=1,628 senior governing party-years, mean=0.330,
   median=0.274, 75th pct=0.470, skewness ≈ 0.85
 - Shape: unimodal, right-skewed, NO bimodal break point
-- DECISION: Use v2xpa_popul as a CONTINUOUS variable in primary analysis
-  (no arbitrary binary cutoff; literature standard).
-- For descriptive comparison only (EDA section 4): dichotomize at 75th
-  percentile (0.47) to label "high-populism governments" (top quartile).
-- Robustness checks (in modeling phase): re-estimate with thresholds at
-  0.30 (median) and 0.50.
+- DECISION: Populism is treated as a **continuous variable** throughout the primary
+  analysis (regression, lead-lag, decomposition) — no arbitrary binary cutoff, no
+  threshold enters any model specification.
+- The 0.47 (75th percentile) threshold is used **only** as a visual label for
+  top-quartile "high-populism governments" in Section 4 (descriptive comparisons) —
+  it is a presentation device, not a modeling choice, and does not feed into any
+  regression or robustness check.
 
 ## Variables of Interest
 
