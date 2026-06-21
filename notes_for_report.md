@@ -128,6 +128,14 @@ predictive result.
   within-country (fixed-effects) outcome: there may be too little time variation to
   identify a country-FE coefficient for some units.
 
+## Findings
+
+- Cross-sectional correlation matrix shows judicial corruption (v2jucorrdc) correlates
+  most strongly with governing populism — consistent with literature on institutional
+  capture (Hungary, Poland, Venezuela, Turkey). This is a strong starting hypothesis for
+  the FE regression (Section 3 of methodology). However, this is correlational; causal
+  direction remains to be tested via lead-lag analysis (Section 4 of methodology).
+
 ## Variables of Interest
 
 ⚠️ **Note:** corruption variables are coded with 0 = low corruption, 1 = high corruption
