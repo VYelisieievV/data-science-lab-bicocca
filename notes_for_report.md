@@ -111,6 +111,23 @@ predictive result.
   it is a presentation device, not a modeling choice, and does not feed into any
   regression or robustness check.
 
+### Direction fix for legislative/judicial corruption (Section 4a, Section 5)
+
+- `v2lgcrrpt`/`v2jucorrdc` plain values are latent z-scale estimates (~-3...+4,
+  *higher = cleaner*) — opposite convention from the 0-1 `v2x_*` D-indices
+  (*higher = more corrupt*). Fixed by rescaling the `_ord` (0-4) versions to
+  `(4 - ord) / 4`, giving 0-1 variables where higher always means more corrupt.
+- ⚠️ **Caveat discovered in Section 5's case-study plots:** `v2jucorrdc_ord` is too
+  coarse (only 0-4 discrete levels) to show within-country variation for several of
+  the case-study countries over 1970-2019 — Venezuela, Bolivia, and Ecuador each take
+  only a **single** distinct `v2jucorrdc_ord` value across the entire 50-year window;
+  Hungary only 2 distinct values; Turkey only 3. The flat `v2jucorrdc_01` line in
+  those plots reflects this coding resolution, not an actual absence of judicial
+  corruption change — do not read "flat line" as "no change" for this variable.
+  Affects any model that uses `v2jucorrdc` (or its `_ord`/rescaled version) as a
+  within-country (fixed-effects) outcome: there may be too little time variation to
+  identify a country-FE coefficient for some units.
+
 ## Variables of Interest
 
 ⚠️ **Note:** corruption variables are coded with 0 = low corruption, 1 = high corruption
