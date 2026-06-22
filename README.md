@@ -44,7 +44,7 @@ The project uses native V-Dem and V-Party variables:
 | Predictor | V-Party `v2xpa_popul` | Aggregated to country-year as governing-party or weighted parliamentary populism score |
 | Outcome | V-Dem `v2x_corr` | Main political corruption index |
 | Sub-outcomes | `v2x_execorr`, `v2lgcrrpt`, `v2jucorrdc`, `v2x_pubcorr` | Executive, legislative, judicial, and public-sector corruption |
-| Controls | GDP per capita, `v2x_regime`, `v2x_rule` | Economic conditions, regime type, and rule of law |
+| Controls | `log_gdppc`, `v2x_polyarchy`, `e_regiongeo`, `e_pop` | Economic conditions, democracy, region, and population |
 | Join keys | `country_id`, `year` | V-Party country-year panel joined to V-Dem country-year data |
 
 The **V-Dem** and **V-Party** datasets are not committed because they are large
@@ -143,6 +143,62 @@ docker compose run --rm duckdb /data/duckdb/vdem.duckdb
 3. Estimate panel regressions with country and year fixed effects.
 4. Use lead-lag / Granger-style checks to probe directionality.
 5. Decompose corruption by subtype to identify which dimension moves most.
+
+### Notebook and preprocessing workflow
+
+Run the work in this order:
+
+1. `notebooks/01_eda_populism_corruption.ipynb` explores coverage, distributions,
+   descriptive group differences, and five country case studies. Its broader samples
+   are for EDA and are not the final regression sample.
+2. `notebooks/02_preprocessing.ipynb` documents the decisions used to construct the
+   strict regression-ready panel.
+3. `src/preprocessing.py` reproduces notebook 02 as a deterministic script without
+   changing either notebook.
+
+After importing the raw data into DuckDB, rebuild the committed processed artifacts
+from the repository root:
+
+```bash
+uv run python src/preprocessing.py
+```
+
+Alternative input and output locations can be supplied explicitly:
+
+```bash
+uv run python src/preprocessing.py \
+  --db-path data/duckdb/vdem.duckdb \
+  --output-dir data/processed
+```
+
+The current strict output is `data/processed/panel_populism_corruption.parquet`:
+**3,965 country-year rows, 96 countries, 1970–2019, and 29 columns**. The script also
+writes `data/processed/panel_preview.csv`, containing the first 100 rows.
+
+The coverage reduction is intentional. Before the coder-count filter there are 1,628
+eligible senior-governing-party observations across 163 countries. Requiring more than
+three coders for both components of the populism index leaves 953 observations across
+96 countries. This trades geographic coverage for more reliable expert-coded inputs;
+the resulting 96-country panel is the primary modeling sample.
+
+The processed schema is:
+
+| Columns | Purpose |
+|---|---|
+| `country_id`, `year`, `country_name` | Country-year identifiers |
+| `party_names`, `n_senior_gov_parties`, `is_election_year`, `years_since_last_election` | Governing-party and forward-fill context |
+| `populism_governing` | Continuous primary treatment |
+| `v2x_corr`, `v2x_execorr`, `v2x_pubcorr`, `v2lgcrrpt`, `v2jucorrdc` | Composite and dimensional corruption outcomes |
+| `e_gdppc`, `log_gdppc`, `v2x_polyarchy`, `e_regiongeo`, `e_pop` | Controls and descriptive attributes |
+| `populism_governing_lag{1,2,3,5}`, `v2x_corr_lag{1,2,3,5}` | Historical values for panel models |
+| `populism_governing_lead{1,2,3}` | Future treatment values for reverse-direction checks |
+
+See notebook 02's data dictionary for the complete column-level descriptions.
+
+Direction matters when interpreting the outcomes: `v2x_corr`, `v2x_execorr`, and
+`v2x_pubcorr` increase with corruption, while the plain latent `v2lgcrrpt` and
+`v2jucorrdc` estimates increase with cleanliness. A negative coefficient for the latter
+two therefore corresponds to more corruption.
 
 ## Analysis Notes
 

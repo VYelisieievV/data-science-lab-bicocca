@@ -24,7 +24,8 @@ Country-Party-Date. Both join on `country_id` + `year`.
 | `v2jucorrdc` | Judicial corruption decisions (bribery in court rulings) | C, ordinal 0–4 | 27,716 |
 
 Within the 1970–2019 overlap with V-Party: `v2x_corr` 8,388/8,454 rows, 182 countries —
-good coverage.
+good raw V-Dem coverage. This is a source-coverage statistic, not the size of the final
+regression panel.
 
 ## 2. Populism + government status — `vdem.raw.vparty_country_party_date`
 
@@ -78,14 +79,23 @@ predictive result.
 ## Section 8a — Data Description (update)
 
 - Effective analysis window: 1970–2019 (constrained by V-Party expert-coded variables starting 1970).
-- Final panel after inner join: ~8,400 country-years, 182 countries.
-- 1,629 senior governing party observations with both populism and corruption available.
+- The descriptive EDA uses broader samples of up to 6,909 country-years and 163–182 countries,
+  depending on the variable and whether a governing-party observation is required.
+- Before coder filtering, 1,628 senior-governing-party populism observations cover 163 countries.
+- The strict regression-ready panel produced by `src/preprocessing.py` contains **3,965
+  country-years, 96 countries, 1970–2019, and 29 columns**.
+- The strict two-component coder filter leaves 953 source observations across 96 countries before
+  annual forward-filling. The coverage loss is the cost of excluding cells based on three or fewer
+  coders; it must be reported as a limitation of the modeling sample.
 
 ## Section 8b — Weaknesses (update)
 
 - V-Party expert-coded vars start in 1970, not 1900.
 - V-Party is dense only in election years (~25–41 countries/year); requires a forward-fill
   assumption to build an annual panel.
+- Requiring more than three coders for both populism components reduces the eligible country count
+  from 163 to 96, so the regression sample is more reliable but less geographically representative
+  than the EDA sample.
 - Coverage ends in 2019, missing the recent populist surge (Meloni in Italy, Trump's second term,
   etc.).
 
@@ -96,7 +106,8 @@ predictive result.
 - Robustness check: seat-share-weighted mean across all parties.
 - Temporal extension: forward-fill from elections to the next election.
 - Data quality filter: exclude cells with fewer than 4 coders (`_nr <= 3`).
-- Final dataset: inner join on (`country_id`, `year`), restricting the panel to 1970–2019.
+- Final dataset: inner join on (`country_id`, `year`), restricting the panel to 3,965 rows across
+  96 countries in 1970–2019.
 
 ### Populism measurement
 
