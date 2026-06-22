@@ -148,3 +148,14 @@ predictive result.
 - `v2jucorrdc` — judicial corruption.
 - `v2xpa_popul` — populism index (V-Party).
 - `v2pagovsup` — party government status (V-Party).
+
+## Potential additional controls (for robustness)
+
+- `v2x_electoral_integrity` (NEW in v16): populist governments often degrade electoral
+  processes; controlling for this would help isolate the populism→corruption channel from
+  broader democratic backsliding.
+- `v2x_lidem_stock`, `v2x_polyarchy_stock` (NEW in v16): democratic maturity controls.
+- `e_ovexist` (NEW in v16): political instability control.
+
+These were not included in the primary panel for simplicity but can be easily joined from
+the V-Dem CSV for robustness checks.
