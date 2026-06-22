@@ -159,3 +159,27 @@ predictive result.
 
 These were not included in the primary panel for simplicity but can be easily joined from
 the V-Dem CSV for robustness checks.
+
+**Example — raw CSV snippet** (`V-Dem-CY-Full+Others-v16.csv`, join keys `country_id`+`year`):
+
+```csv
+country_id,year,v2x_electoral_integrity,v2x_lidem_stock,v2x_polyarchy_stock,e_ovexist
+2,1970,0.812,0.452,0.601,0
+2,1971,0.798,0.460,0.598,0
+20,1970,0.343,0.110,0.205,1
+20,1971,0.337,0.112,0.201,1
+```
+
+**Example join (Polars, mirrors the join pattern in `notebooks/02_preprocessing.ipynb` Section 3):**
+
+```python
+import polars as pl
+
+extra_controls = pl.read_csv(
+    "data/raw/V-Dem-CY-Full+Others-v16.csv",
+    columns=["country_id", "year", "v2x_electoral_integrity",
+             "v2x_lidem_stock", "v2x_polyarchy_stock", "e_ovexist"],
+)
+
+panel = panel.join(extra_controls, on=["country_id", "year"], how="left")
+```
