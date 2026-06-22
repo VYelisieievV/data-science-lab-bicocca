@@ -1,0 +1,8 @@
+**Table 1 - Two-way FE grid (M1-M3: 3940 obs/95 countries; M4 own sample: 3845/95)**
+
+| Model | Controls | Populism coef | 95% CI | p | within-R2 |
+|---|---|---|---|---|---|
+| M1 | country+year FE | -0.0677 | [-0.139, 0.004] | 0.0644 | 0.01 |
+| M2 | + log GDP | -0.0715 | [-0.141, -0.002] | 0.0428 | -0.059 |
+| M3 | + polyarchy | -0.0638 | [-0.123, -0.004] | 0.0358 | -0.196 |
+| M4 | + lagged corr | -0.0033 | [-0.016, 0.010] | 0.6148 | 0.885 |
