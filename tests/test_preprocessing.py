@@ -71,6 +71,14 @@ def test_forward_fill_starts_at_first_observation() -> None:
 
 
 def test_lags_and_leads_follow_annual_rows() -> None:
+    # Use only the non-lag/lead base columns so the test is not sensitive to
+    # the order or count of columns in OUTPUT_COLUMNS.
+    base_cols = [
+        c
+        for c in OUTPUT_COLUMNS
+        if not any(c.endswith(f"_lag{k}") for k in (1, 2, 3, 5))
+        and not any(c.endswith(f"_lead{k}") for k in (1, 2, 3))
+    ]
     panel = pl.DataFrame(
         {
             column: (
@@ -84,7 +92,7 @@ def test_lags_and_leads_follow_annual_rows() -> None:
                 if column == "v2x_corr"
                 else [None] * 6
             )
-            for column in OUTPUT_COLUMNS[:18]
+            for column in base_cols
         },
         schema_overrides={"country_name": pl.String, "party_names": pl.String},
     )

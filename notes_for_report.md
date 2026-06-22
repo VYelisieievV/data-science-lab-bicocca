@@ -83,7 +83,9 @@ predictive result.
   depending on the variable and whether a governing-party observation is required.
 - Before coder filtering, 1,628 senior-governing-party populism observations cover 163 countries.
 - The strict regression-ready panel produced by `src/preprocessing.py` contains **3,965
-  country-years, 96 countries, 1970–2019, and 29 columns**.
+  country-years, 96 countries, 1970–2019, and 31 columns** (the original 29 plus two
+  orientation-harmonised sub-measure columns, `v2lgcrrpt_01` / `v2jucorrdc_01`, added for the
+  per-sphere decomposition).
 - The strict two-component coder filter leaves 953 source observations across 96 countries before
   annual forward-filling. The coverage loss is the cost of excluding cells based on three or fewer
   coders; it must be reported as a limitation of the modeling sample.

@@ -40,7 +40,9 @@ VDEM_COLUMNS = {
     "v2x_execorr",
     "v2x_pubcorr",
     "v2lgcrrpt",
+    "v2lgcrrpt_ord",  # ordinal 0-4; used to build the orientation-harmonised _01 column
     "v2jucorrdc",
+    "v2jucorrdc_ord",  # ordinal 0-4; same
     "e_gdppc",
     "v2x_polyarchy",
     "e_regiongeo",
@@ -59,8 +61,13 @@ OUTPUT_COLUMNS = [
     "v2x_corr",
     "v2x_execorr",
     "v2x_pubcorr",
+    # Raw ordinal sub-measures (kept for traceability); 0 = most corrupt, 4 = least.
     "v2lgcrrpt",
     "v2jucorrdc",
+    # Orientation-harmonised versions: 0 = cleanest, 1 = most corrupt — same direction as
+    # v2x_corr/execorr/pubcorr so all four decomposition outcomes can be plotted together.
+    "v2lgcrrpt_01",
+    "v2jucorrdc_01",
     "e_gdppc",
     "v2x_polyarchy",
     "e_regiongeo",
@@ -189,6 +196,13 @@ def join_vdem(populism_panel: pl.DataFrame, vdem: pl.DataFrame) -> pl.DataFrame:
         .with_columns(
             pl.col("e_gdppc").log().alias("log_gdppc"),
             pl.col("country_name_vdem").alias("country_name"),
+            # Reverse the ordinal (0–4) versions of the two sub-measures so all four
+            # decomposition outcomes share orientation (higher = more corrupt) and scale [0, 1].
+            # _ord gives the 0–4 ordinal category (0 = most corrupt, 4 = least); the plain
+            # latent-interval columns can exceed this range, so we use _ord for rescaling.
+            # (4 - x) / 4 maps {0→1, 1→0.75, 2→0.5, 3→0.25, 4→0} — same formula as the EDA.
+            ((4 - pl.col("v2lgcrrpt_ord")) / 4).alias("v2lgcrrpt_01"),
+            ((4 - pl.col("v2jucorrdc_ord")) / 4).alias("v2jucorrdc_01"),
         )
         .drop("country_name_vdem")
         .sort(["country_id", "year"])
@@ -217,6 +231,20 @@ def validate_panel(panel: pl.DataFrame) -> None:
         raise PreprocessingError(
             "Panel contains gaps within country histories; row shifts would not equal calendar lags"
         )
+
+    # All four corruption sub-measures must correlate *positively* with the composite v2x_corr
+    # (higher = more corrupt in every column).  A negative correlation signals an orientation bug.
+    sub_measures = ["v2x_execorr", "v2x_pubcorr", "v2lgcrrpt_01", "v2jucorrdc_01"]
+    available = set(panel.columns)
+    for col in sub_measures:
+        if col not in available:
+            continue
+        corr = panel.select(pl.corr("v2x_corr", col)).item()
+        if corr is not None and corr < 0:
+            raise PreprocessingError(
+                f"Sub-measure {col!r} correlates negatively with v2x_corr (r={corr:.3f}); "
+                "check orientation — all decomposition outcomes must run higher=more-corrupt"
+            )
 
 
 def add_lags_and_leads(panel: pl.DataFrame) -> pl.DataFrame:
