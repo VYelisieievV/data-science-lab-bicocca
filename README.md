@@ -44,7 +44,8 @@ The project uses native V-Dem and V-Party variables:
 | Predictor | V-Party `v2xpa_popul` | Aggregated to country-year as governing-party or weighted parliamentary populism score |
 | Outcome | V-Dem `v2x_corr` | Main political corruption index |
 | Sub-outcomes | `v2x_execorr`, `v2lgcrrpt`, `v2jucorrdc`, `v2x_pubcorr` | Executive, legislative, judicial, and public-sector corruption |
-| Controls | `log_gdppc`, `v2x_polyarchy`, `e_regiongeo`, `e_pop` | Economic conditions, democracy, region, and population |
+| Regression controls | `log_gdppc`, `v2x_polyarchy` | The two controls that actually enter the FE models (GDP, electoral democracy) |
+| Other columns (not estimated controls) | `e_regiongeo`, `e_pop` | Region (time-invariant → absorbed by country FE; used only to stratify CV folds) and population (descriptive; not in the reported models) |
 | Join keys | `country_id`, `year` | V-Party country-year panel joined to V-Dem country-year data |
 
 The **V-Dem** and **V-Party** datasets are not committed because they are large
@@ -172,8 +173,10 @@ uv run python src/preprocessing.py \
 ```
 
 The current strict output is `data/processed/panel_populism_corruption.parquet`:
-**3,965 country-year rows, 96 countries, 1970–2019, and 29 columns**. The script also
-writes `data/processed/panel_preview.csv`, containing the first 100 rows.
+**3,965 country-year rows, 96 countries, 1970–2019, and 31 columns** (the two
+orientation-harmonised sub-measures `v2lgcrrpt_01` / `v2jucorrdc_01` were added for the
+per-sphere decomposition). The script also writes `data/processed/panel_preview.csv`,
+containing the first 100 rows.
 
 The coverage reduction is intentional. Before the coder-count filter there are 1,628
 eligible senior-governing-party observations across 163 countries. Requiring more than
@@ -188,8 +191,9 @@ The processed schema is:
 | `country_id`, `year`, `country_name` | Country-year identifiers |
 | `party_names`, `n_senior_gov_parties`, `is_election_year`, `years_since_last_election` | Governing-party and forward-fill context |
 | `populism_governing` | Continuous primary treatment |
-| `v2x_corr`, `v2x_execorr`, `v2x_pubcorr`, `v2lgcrrpt`, `v2jucorrdc` | Composite and dimensional corruption outcomes |
-| `e_gdppc`, `log_gdppc`, `v2x_polyarchy`, `e_regiongeo`, `e_pop` | Controls and descriptive attributes |
+| `v2x_corr`, `v2x_execorr`, `v2x_pubcorr`, `v2lgcrrpt`, `v2jucorrdc`, `v2lgcrrpt_01`, `v2jucorrdc_01` | Composite and dimensional corruption outcomes (the `_01` pair is orientation-harmonised for the decomposition) |
+| `log_gdppc`, `v2x_polyarchy` | The two controls that enter the FE regressions |
+| `e_gdppc`, `e_regiongeo`, `e_pop` | Descriptive / CV-stratification columns — **not** estimated controls (region is absorbed by country FE; population is unused in the models) |
 | `populism_governing_lag{1,2,3,5}`, `v2x_corr_lag{1,2,3,5}` | Historical values for panel models |
 | `populism_governing_lead{1,2,3}` | Future treatment values for reverse-direction checks |
 

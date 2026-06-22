@@ -1,0 +1,7 @@
+**Table 5 - Model-implied marginal effect of populism at low/median/high polyarchy**
+
+| polyarchy_quantile | polyarchy_value | marginal_effect | ci_low | ci_high | excludes_zero |
+|---|---|---|---|---|---|
+| p10 | 0.136 | -0.1635 | -0.2815 | -0.0456 | True |
+| p50 | 0.479 | -0.0755 | -0.1392 | -0.0118 | True |
+| p90 | 0.876 | 0.0265 | -0.0399 | 0.0929 | False |
