@@ -1,0 +1,5 @@
+model,direction,outcome,proposed_cause,term_type,order,term,coef,se,p,ci_low,ci_high,n_obs,n_countries,lead_joint_p,lead_joint_df,placebo_warning
+placebo_corruption_to_populism_L2_F2,corruption_to_populism,populism_governing,v2x_corr,lag,1,v2x_corr_lag1,-0.012885984914913967,0.06505275300249415,0.8429902298613916,-0.14043225657410874,0.1146602867442808,3560,95,0.8408253208141515,2,False
+placebo_corruption_to_populism_L2_F2,corruption_to_populism,populism_governing,v2x_corr,lag,2,v2x_corr_lag2,-0.20370642996591576,0.10348428225540696,0.04909396606663119,-0.4066038288891999,-0.0008090310426316361,3560,95,0.8408253208141515,2,False
+placebo_corruption_to_populism_L2_F2,corruption_to_populism,populism_governing,v2x_corr,lead_placebo,1,v2x_corr_lead1,-0.022622079194822977,0.08567765923209368,0.7917672810605443,-0.19060676078272687,0.1453626023930809,3560,95,0.8408253208141515,2,False
+placebo_corruption_to_populism_L2_F2,corruption_to_populism,populism_governing,v2x_corr,lead_placebo,2,v2x_corr_lead2,0.052963506554489566,0.09011658091115662,0.5567577066446103,-0.12372438718386619,0.2296514002928453,3560,95,0.8408253208141515,2,False

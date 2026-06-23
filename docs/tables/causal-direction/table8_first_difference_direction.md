@@ -1,0 +1,4 @@
+| model | direction | dependent_delta | cause_delta_lag | coef | se | p | ci_low | ci_high | n_obs | n_countries | controls |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| first_difference_populism_to_corruption | populism_to_corruption | delta_v2x_corr | delta_populism_governing_lag1 | -0.0029 | 0.0067 | 0.6642 | -0.0161 | 0.0103 | 3750 | 95 | delta_log_gdppc, delta_v2x_polyarchy |
+| first_difference_corruption_to_populism | corruption_to_populism | delta_populism_governing | delta_v2x_corr_lag1 | -0.0158 | 0.029 | 0.5851 | -0.0727 | 0.041 | 3750 | 95 | delta_log_gdppc, delta_v2x_polyarchy |

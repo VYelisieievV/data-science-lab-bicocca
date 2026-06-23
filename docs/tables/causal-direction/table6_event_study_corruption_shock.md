@@ -1,0 +1,8 @@
+| event_time | term | model | direction | outcome | coef | se | p | ci_low | ci_high | reference | n_obs | n_countries | n_events | event_definition | pretrend_joint_p | post_joint_p |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| -3 | event_m3 | event_study_corruption_shock | corruption_to_populism | populism_governing | 0.0507 | 0.024 | 0.0346 | 0.0037 | 0.0977 | False | 3940 | 95 | 51 | first within-country increase in v2x_corr >= 0.05 | 0.083 | 0.0205 |
+| -2 | event_m2 | event_study_corruption_shock | corruption_to_populism | populism_governing | 0.0551 | 0.0253 | 0.0296 | 0.0055 | 0.1048 | False | 3940 | 95 | 51 | first within-country increase in v2x_corr >= 0.05 | 0.083 | 0.0205 |
+| -1 | reference | event_study_corruption_shock | corruption_to_populism | populism_governing | 0.0 |  |  | 0.0 | 0.0 | True | 3940 | 95 | 51 | first within-country increase in v2x_corr >= 0.05 | 0.083 | 0.0205 |
+| 0 | event_p0 | event_study_corruption_shock | corruption_to_populism | populism_governing | 0.0656 | 0.027 | 0.0151 | 0.0127 | 0.1186 | False | 3940 | 95 | 51 | first within-country increase in v2x_corr >= 0.05 | 0.083 | 0.0205 |
+| 1 | event_p1 | event_study_corruption_shock | corruption_to_populism | populism_governing | 0.0697 | 0.028 | 0.0129 | 0.0148 | 0.1247 | False | 3940 | 95 | 51 | first within-country increase in v2x_corr >= 0.05 | 0.083 | 0.0205 |
+| 2 | event_p2 | event_study_corruption_shock | corruption_to_populism | populism_governing | 0.0761 | 0.0264 | 0.004 | 0.0243 | 0.128 | False | 3940 | 95 | 51 | first within-country increase in v2x_corr >= 0.05 | 0.083 | 0.0205 |
