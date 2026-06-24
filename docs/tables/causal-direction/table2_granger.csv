@@ -1,0 +1,5 @@
+direction,dependent_variable,proposed_cause,lag_order,joint_test_stat,joint_test_p,joint_df,n_obs,n_countries,controls,interpretation
+populism_to_corruption,v2x_corr,populism_governing,1,1.2869441395445322,0.25661187145207986,1,3845,95,"log_gdppc, v2x_polyarchy",do not reject H0
+corruption_to_populism,populism_governing,v2x_corr,1,2.980713488104573,0.0842621200405913,1,3845,95,"log_gdppc, v2x_polyarchy",do not reject H0
+populism_to_corruption,v2x_corr,populism_governing,2,0.7531937989332922,0.6861926227659976,2,3750,95,"log_gdppc, v2x_polyarchy",do not reject H0
+corruption_to_populism,populism_governing,v2x_corr,2,2.848314481228381,0.24071123940684808,2,3750,95,"log_gdppc, v2x_polyarchy",do not reject H0

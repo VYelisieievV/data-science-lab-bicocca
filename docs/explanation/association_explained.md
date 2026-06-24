@@ -4,7 +4,7 @@ A plain-language, detailed record of the association work: every step, the reaso
 actual numbers. This is **not** the report and not the report's structure — it's the explanatory
 document a teammate (or future-us) reads to understand exactly what was done and why each choice was
 made. The runnable version is `notebooks/03_association.ipynb`; the logic lives in `src/association/`.
-Figures are saved in `docs/figures/`.
+Figures are saved in `docs/figures/association/`.
 
 ---
 
@@ -89,14 +89,14 @@ sign** to the +0.14 pooled correlation (Step D explains why). This is *not* "no 
 emphatically *not* the hypothesised *positive* effect. (The tiny/negative within-R² is about predictive
 fit, not about the coefficient's sign.)
 
-![M1–M3 coefficient stability: the populism coefficient sits near −0.06 across M1–M3; M2 and M3 intervals exclude zero (significant), M1 includes it.](figures/fig1_coefficient_stability.png)
+![M1–M3 coefficient stability: the populism coefficient sits near −0.06 across M1–M3; M2 and M3 intervals exclude zero (significant), M1 includes it.](../figures/association/fig1_coefficient_stability.png)
 
 ### Step D — We located where the "obvious" positive correlation actually lives.
 **Why:** the EDA found a positive populism–corruption correlation (+0.12). The within-country models give
 a *negative* sign — so where did the positive +0.14 go? We ran the *same* relationship four ways to see
 (reproducible via `fit_between_within_comparison`).
 
-![Where the correlation lives: pooled and between-country estimates are positive (right of zero); the within-country fixed-effects estimates sit on zero.](figures/fig3_between_vs_within.png)
+![Where the correlation lives: pooled and between-country estimates are positive (right of zero); the within-country fixed-effects estimates sit on zero.](../figures/association/fig3_between_vs_within.png)
 
 **What we found:**
 
@@ -150,7 +150,7 @@ as the answer.
 Even a model free to use every scrap of cross-country signal barely leans on populism. Same verdict as
 fixed effects.
 
-![XGBoost feature importance (mean |SHAP|): electoral democracy and GDP dominate; governing-party populism is the least important of the three predictors.](figures/fig2_shap_importance.png)
+![XGBoost feature importance (mean |SHAP|): electoral democracy and GDP dominate; governing-party populism is the least important of the three predictors.](../figures/association/fig2_shap_importance.png)
 
 ### Step H — Robustness: we stress-tested the conclusion (not a "pick the best model" contest).
 **An important principle:** we deliberately do **not** choose the best-fitting model. For this kind of
@@ -276,7 +276,8 @@ at low polyarchy levels — but this is observational, same-year, and not a caus
 ### Where everything is
 - Runnable analysis: `notebooks/03_association.ipynb`
 - Code (one function per step, documented): `src/association/models.py`, `src/association/plots.py`
-- Figures for the report: `docs/figures/fig1_coefficient_stability.png`,
-  `fig2_shap_importance.png`, `fig3_between_vs_within.png`
+- Figures for the report: `docs/figures/association/fig1_coefficient_stability.png`,
+  `docs/figures/association/fig2_shap_importance.png`,
+  `docs/figures/association/fig3_between_vs_within.png`
 - Data/EDA background and the research-question framing: `notes_for_report.md`
 - Abbreviations: `GLOSSARY.md`

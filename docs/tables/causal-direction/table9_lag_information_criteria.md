@@ -1,0 +1,12 @@
+| direction | model_type | lag_order | n_obs | n_countries | rss | n_parameters_approx | aic | bic | best_aic | best_bic |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| populism_to_corruption | granger | 1 | 3845 | 95 | 4.6024 | 148 | -25572.9992 | -24647.3289 | True | True |
+| populism_to_corruption | granger | 2 | 3750 | 95 | 4.3738 | 149 | -25029.016 | -24100.8188 | False | False |
+| populism_to_corruption | granger | 3 | 3655 | 95 | 4.3193 | 150 | -24337.4316 | -23406.8539 | False | False |
+| populism_to_corruption | granger | 4 | 3560 | 95 | 4.027 | 151 | -23850.7998 | -22917.9949 | False | False |
+| populism_to_corruption | granger | 5 | 3465 | 95 | 3.9699 | 152 | -23160.0633 | -22225.1922 | False | False |
+| corruption_to_populism | granger | 1 | 3845 | 95 | 28.3746 | 148 | -18579.2361 | -17653.5659 | True | True |
+| corruption_to_populism | granger | 2 | 3750 | 95 | 28.102 | 149 | -18053.2668 | -17125.0696 | False | False |
+| corruption_to_populism | granger | 3 | 3655 | 95 | 27.8886 | 150 | -17520.4409 | -16589.8632 | False | False |
+| corruption_to_populism | granger | 4 | 3560 | 95 | 27.3544 | 151 | -17030.3487 | -16097.5438 | False | False |
+| corruption_to_populism | granger | 5 | 3465 | 95 | 26.4345 | 152 | -16590.6353 | -15655.7642 | False | False |

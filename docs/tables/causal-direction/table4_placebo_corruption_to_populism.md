@@ -1,0 +1,6 @@
+| model | direction | outcome | proposed_cause | term_type | order | term | coef | se | p | ci_low | ci_high | n_obs | n_countries | lead_joint_p | lead_joint_df | placebo_warning |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| placebo_corruption_to_populism_L2_F2 | corruption_to_populism | populism_governing | v2x_corr | lag | 1 | v2x_corr_lag1 | -0.0129 | 0.0651 | 0.843 | -0.1404 | 0.1147 | 3560 | 95 | 0.8408 | 2 | False |
+| placebo_corruption_to_populism_L2_F2 | corruption_to_populism | populism_governing | v2x_corr | lag | 2 | v2x_corr_lag2 | -0.2037 | 0.1035 | 0.0491 | -0.4066 | -0.0008 | 3560 | 95 | 0.8408 | 2 | False |
+| placebo_corruption_to_populism_L2_F2 | corruption_to_populism | populism_governing | v2x_corr | lead_placebo | 1 | v2x_corr_lead1 | -0.0226 | 0.0857 | 0.7918 | -0.1906 | 0.1454 | 3560 | 95 | 0.8408 | 2 | False |
+| placebo_corruption_to_populism_L2_F2 | corruption_to_populism | populism_governing | v2x_corr | lead_placebo | 2 | v2x_corr_lead2 | 0.053 | 0.0901 | 0.5568 | -0.1237 | 0.2297 | 3560 | 95 | 0.8408 | 2 | False |
