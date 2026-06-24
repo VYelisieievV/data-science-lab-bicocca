@@ -1,0 +1,102 @@
+\documentclass[11pt,a4paper,oneside]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{top=2.3cm,bottom=2.4cm,left=2.6cm,right=2.6cm,headheight=14pt}
+
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{threeparttable}
+\usepackage{siunitx}
+\sisetup{detect-all,round-mode=places,round-precision=3}
+\usepackage{amsmath,amssymb}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{subcaption}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf,justification=justified,singlelinecheck=false}
+
+\usepackage[dvipsnames,table]{xcolor}
+\definecolor{BicoccaBlue}{HTML}{005A9C}
+\definecolor{DarkGray}{HTML}{3A3A3A}
+\definecolor{LightBlue}{HTML}{EAF3F8}
+\definecolor{LightOrange}{HTML}{FBEFE5}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=1.5em}
+
+\usepackage{setspace}
+\setstretch{1.12}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\emergencystretch}{2em}
+
+\usepackage[authoryear,round]{natbib}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=BicoccaBlue,
+  citecolor=BicoccaBlue,
+  urlcolor=BicoccaBlue,
+  pdftitle={Populism in Power and Political Corruption},
+  pdfauthor={Irida Pajenga, Simone Ragusini, Vladyslav Yelisieiev, Edoardo Zero}
+}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Populism in Power and Political Corruption}
+\fancyhead[R]{\small Data Science Lab}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.35pt}
+
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{DarkGray}}
+  {\filleft\Large\color{BicoccaBlue}\chaptertitlename\ \thechapter}
+  {0.5ex}
+  {\titlerule\vspace{1ex}\filright}
+\titlespacing*{\chapter}{0pt}{-20pt}{22pt}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\codevar}[1]{\texttt{#1}}
+\newcommand{\Rtwo}{\ensuremath{R^{2}}}
+\newcommand{\HRule}{\rule{\linewidth}{0.55pt}}
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\input{cover}
+
+\hypersetup{pageanchor=true}
+\pagenumbering{roman}
+\input{abstract}
+\tableofcontents
+\clearpage
+\listoffigures
+\listoftables
+\clearpage
+
+\pagenumbering{arabic}
+\input{introduction}
+\input{chapter1}
+\input{chapter2}
+\input{chapter3}
+
+\appendix
+\input{appendix}
+
+\clearpage
+\addcontentsline{toc}{chapter}{References}
+\bibliographystyle{apalike}
+\bibliography{references}
+
+\end{document}

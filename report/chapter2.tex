@@ -1,0 +1,196 @@
+\chapter{Empirical Strategy}
+\label{chap:methods}
+
+\section{Estimands before models}
+
+The phrase ``populism is associated with corruption'' can describe three different quantities. A
+pooled estimate combines differences between countries and changes within countries. A between
+estimate asks whether countries with more populist governments are more corrupt on average. A fixed-
+effects estimate asks whether a country is more corrupt in years when its own government is more
+populist than usual. Finally, a directional model asks whether past values of one variable predict
+later values of the other after persistence is considered.
+
+No single model answers all these questions. The analysis therefore fixes the estimand first and uses
+model fit only as a diagnostic. In particular, a pooled regression may predict levels well because it
+uses large cross-country differences, yet remain inappropriate for the within-country research
+question. Conversely, a low within-
+\Rtwo{} does not invalidate a fixed-effects coefficient when the dependent variable is highly
+persistent and the purpose is estimation rather than prediction \citep{wooldridge2010}.
+
+\section{Contemporaneous association}
+
+\subsection{Two-way fixed effects}
+
+The primary association model is
+
+\begin{equation}
+  C_{it} = \beta P_{it} + \mathbf{X}_{it}'\boldsymbol{\gamma}
+  + \alpha_i + \lambda_t + \varepsilon_{it},
+  \label{eq:twfe}
+\end{equation}
+
+where $C_{it}$ is composite corruption, $P_{it}$ is governing-party populism,
+$\mathbf{X}_{it}$ contains time-varying controls, $\alpha_i$ are country fixed effects, and
+$\lambda_t$ are year fixed effects. Country effects remove time-invariant history, geography, and
+baseline institutions. Year effects remove shocks common to all countries. The coefficient $\beta$
+is therefore identified by within-country deviations from long-run country and year means.
+
+Three static specifications are fitted on one frozen complete-case sample:
+
+\begin{itemize}
+  \item M1: populism plus country and year effects;
+  \item M2: M1 plus log GDP per capita;
+  \item M3: M2 plus electoral democracy.
+\end{itemize}
+
+Freezing the M1--M3 sample ensures that coefficient movement reflects added controls rather than a
+changing set of observations. Country-clustered standard errors allow arbitrary serial dependence
+within countries. Two-way clustering and Driscoll--Kraay covariance estimates provide sensitivity to
+common cross-sectional shocks \citep{driscoll1998}.
+
+M4 adds lagged corruption:
+
+\begin{equation}
+  C_{it} = \rho C_{i,t-1} + \beta_{SR} P_{it}
+  + \mathbf{X}_{it}'\boldsymbol{\gamma} + \alpha_i + \lambda_t + u_{it}.
+  \label{eq:dynamic}
+\end{equation}
+
+This is not a fourth stability model. It asks about the small short-run residual change after last
+year's corruption is considered. Its coefficient and within-
+\Rtwo{} are not directly comparable to static M1--M3. Dynamic fixed-effects estimates may also exhibit
+finite-panel bias \citep{nickell1981}; the relatively long country histories reduce, but do not remove,
+that concern.
+
+\subsection{Between-versus-within comparison}
+
+To locate the raw positive relationship, the same single-predictor association is estimated as pooled
+OLS, between-country OLS on country means, country fixed effects, and two-way fixed effects. Pooled
+errors are clustered by country and between-country errors are heteroskedasticity-robust. The purpose
+is not to select a winner by fit, but to show whether the sign comes from comparing different countries
+or from changes within the same country.
+
+\subsection{Democracy heterogeneity}
+
+The hypothesis that institutional context moderates the association is tested by interacting populism
+with electoral democracy:
+
+\begin{equation}
+  C_{it} = \beta_1 P_{it} + \beta_2 D_{it} + \beta_3(P_{it}D_{it})
+  + \gamma\log GDPpc_{it} + \alpha_i + \lambda_t + \varepsilon_{it}.
+\end{equation}
+
+Rather than interpret $\beta_3$ alone, the report presents the model-implied slope
+$\partial C/\partial P = \beta_1 + \beta_3D$ at the 10th, 50th, and 90th percentiles of democracy.
+These are marginal effects from one interaction model, not separate regressions chosen after observing
+the data.
+
+\section{Temporal ordering}
+
+\subsection{Lead-lag models}
+
+RQ2 tests both possible directions. For populism to corruption, the two-lag model is
+
+\begin{equation}
+  C_{it} = \theta_1 P_{i,t-1} + \theta_2 P_{i,t-2}
+  + \mathbf{X}_{it}'\boldsymbol{\gamma} + \alpha_i + \lambda_t + e_{it}.
+  \label{eq:leadlag}
+\end{equation}
+
+The reverse model exchanges $C$ and $P$. Lead-lag estimates establish temporal order more clearly than
+same-year association, but remain vulnerable to persistence. In the analysis panel, lag-1
+autocorrelation is approximately 0.93 for populism and 0.99 for composite corruption.
+
+\subsection{Granger-style tests}
+
+The stricter model conditions on the dependent variable's own history:
+
+\begin{equation}
+  C_{it} = \sum_{\ell=1}^{2}\rho_{\ell} C_{i,t-\ell}
+  + \sum_{\ell=1}^{2}\theta_{\ell} P_{i,t-\ell}
+  + \mathbf{X}_{it}'\boldsymbol{\gamma} + \alpha_i + \lambda_t + e_{it}.
+  \label{eq:granger}
+\end{equation}
+
+A joint Wald test evaluates $H_0:\theta_1=\theta_2=0$. Rejection means that lagged populism adds
+predictive information beyond corruption's own past. It does not establish structural causality:
+unobserved time-varying confounders, measurement error, and anticipation can still generate predictive
+ordering. We therefore use ``Granger-style'' rather than causal language
+\citep{granger1969}.
+
+Lag windows from one to five years are compared with AIC and BIC only as diagnostics. Longer windows
+drop additional early observations, so the information criteria do not always compare identical
+samples. The two-lag model remains the pre-specified main analysis.
+
+\subsection{Placebos, events, and changes}
+
+Three designs probe the main directional result:
+
+\begin{enumerate}
+  \item \textbf{Placebo leads.} Future proposed-cause values are added to the current-outcome model.
+  Significant future terms would warn of pre-trends, anticipation, or omitted common causes.
+  \item \textbf{Event studies.} Populist entry is the first election-year increase in governing
+  populism of at least 0.10 that reaches 0.50. A corruption shock is the first annual increase in the
+  composite index of at least 0.05. Event-time coefficients are estimated relative to year $-1$, with
+  joint pre- and post-event tests.
+  \item \textbf{First differences.} Annual changes remove country levels through an alternative
+  transformation. Directional models regress the current change in the outcome on the lagged change in
+  the proposed cause and changes in controls.
+\end{enumerate}
+
+Because populism is forward-filled, the lead-lag model is also re-estimated on election years,
+government-change years, and observations no more than five or ten years from the last election.
+
+\section{Institutional decomposition}
+
+For each corruption dimension $d$, the controlled static model is
+
+\begin{equation}
+  C^d_{it} = \beta_d P_{it} + \mathbf{X}_{it}'\boldsymbol{\gamma}_d
+  + \alpha^d_i + \lambda^d_t + \varepsilon^d_{it}.
+  \label{eq:decomposition}
+\end{equation}
+
+Raw coefficients cannot be ranked across outcomes with different latent scales. We therefore report
+the within-standardised effect
+
+\begin{equation}
+  \widetilde{\beta}_d = \beta_d
+  \frac{SD_{within}(P)}{SD_{within}(C^d)}.
+\end{equation}
+
+This quantity is the change in within-country standard deviations of the outcome associated with a
+one-within-standard-deviation change in populism. Outcome-specific samples preserve power; a common
+complete-case sample checks whether rankings reflect legislative missingness.
+
+The primary decomposition contains four same-year M3 tests and eight Granger-style tests (four
+dimensions in two directions). Benjamini--Hochberg adjustment controls the false discovery rate within
+these pre-declared families \citep{benjamini1995}. The composite is a benchmark and is not counted as
+an independent fifth corruption outcome.
+
+\section{Predictive benchmark}
+
+A gradient-boosted tree model provides a separate non-linear diagnostic. XGBoost uses governing-party
+populism, log GDP per capita, and electoral democracy \citep{chen2016}. Entire countries are held out
+with region-stratified group folds, preventing observations from the same country appearing in both
+training and test sets. A nested inner loop tunes the hyperparameters without seeing outer-fold test
+countries. SHAP values rank feature use in the fitted prediction model \citep{lundberg2017}.
+
+This exercise is not an alternative causal estimator. Raw features retain between-country information
+that fixed effects deliberately remove, so out-of-fold predictive \Rtwo{} and fixed-effects within-
+\Rtwo{} answer different questions. The useful diagnostic is whether a flexible model finds populism
+important after GDP and democracy are available.
+
+\section{Decision rules and reproducibility}
+
+The analysis follows four reporting rules. First, coefficients, intervals, sample sizes, and effect
+magnitudes are reported together; statistical significance is never treated as substantive size.
+Second, null findings are stated as absence of robust evidence, not proof of no effect. Third,
+robustness checks evaluate stability and do not form a leaderboard from which the preferred result is
+selected. Fourth, causal wording is reserved for designs that could justify it; this observational
+panel cannot.
+
+All preprocessing and analysis steps are executable from versioned Python modules. Tables and figures
+are generated from committed processed data, and automated tests validate aggregation, orientation,
+panel shifts, model construction, and multiplicity correction. Reproducibility commands are listed in
+\Cref{app:reproducibility}.
