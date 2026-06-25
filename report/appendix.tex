@@ -1,0 +1,131 @@
+\chapter{Supplementary Evidence and Reproducibility}
+
+\section{Selected robustness results}
+\label{app:robustness}
+
+\begin{table}[H]
+\centering
+\caption{Robustness of the composite contemporaneous association.}
+\label{tab:assocrobust}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Estimator & Coefficient & SE & 95\% CI & $p$ \\
+\midrule
+TWFE, country cluster & -0.0715 & 0.0353 & $[-0.1408,-0.0023]$ & 0.043 \\
+TWFE, country + year cluster & -0.0715 & 0.0348 & $[-0.1398,-0.0033]$ & 0.040 \\
+TWFE, Driscoll--Kraay & -0.0715 & 0.0152 & $[-0.1013,-0.0418]$ & $<0.001$ \\
+First difference & -0.0243 & 0.0187 & $[-0.0610,0.0124]$ & 0.195 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Primary temporal tests for composite corruption.}
+\label{tab:directionappendix}
+\small
+\begin{tabularx}{\textwidth}{Yrrrr}
+\toprule
+Direction and test & Estimate / statistic & $p$ & Observations & Countries \\
+\midrule
+Populism $\rightarrow$ corruption, lead-lag L1 & $\theta_1=-0.056$ & 0.065 & 3,845 & 95 \\
+Populism $\rightarrow$ corruption, lead-lag L2 lag 1 & $\theta_1=-0.048$ & 0.031 & 3,750 & 95 \\
+Populism $\rightarrow$ corruption, Granger L2 joint & $\chi^2=0.753$ & 0.686 & 3,750 & 95 \\
+Corruption $\rightarrow$ populism, Granger L2 joint & $\chi^2=2.848$ & 0.241 & 3,750 & 95 \\
+Future populism placebo, joint & -- & 0.096 & 3,750 & 95 \\
+Future corruption placebo, joint & -- & 0.841 & 3,750 & 95 \\
+Populist-entry post-event joint & -- & 0.228 & 3,940 & 95 \\
+Populist-entry pre-trend joint & -- & 0.983 & 3,940 & 95 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Within-country information by corruption dimension}
+
+\begin{table}[H]
+\centering
+\caption{Coverage, within variation, and persistence of corruption outcomes.}
+\label{tab:dimensiondiagnostics}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+Outcome & $N$ & Missing & Within variance & Lag-1 corr. & Invariant countries \\
+\midrule
+Composite & 3,965 & 0 & 12.5\% & 0.993 & 2 \\
+Executive & 3,965 & 0 & 17.2\% & 0.987 & 3 \\
+Public sector & 3,965 & 0 & 16.0\% & 0.990 & 3 \\
+Legislative & 3,770 & 195 & 12.4\% & 0.992 & 6 \\
+Judicial & 3,965 & 0 & 11.1\% & 0.992 & 5 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Additional heterogeneity diagnostic}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth]{democracy_lags.png}
+  \caption{Populism-to-corruption lag estimates in lower- and higher-democracy country groups. The
+  pattern suggests more negative lag-1 coefficients at lower democracy, but marginal effects are not
+  statistically clear.}
+  \label{fig:democracylags}
+\end{figure}
+
+\section{Reproducibility workflow}
+\label{app:reproducibility}
+
+The repository uses Python 3.12/3.13-compatible code managed by \codevar{uv}. Raw V-Dem and V-Party
+files are imported to DuckDB, while the strict processed panel is committed so all reported analyses
+can be reproduced without redistributing every raw file. From the repository root:
+
+\begin{verbatim}
+uv sync --extra dev --extra analysis
+uv run python src/preprocessing.py
+uv run pytest
+uv run python scripts/generate_artifacts.py
+uv run python scripts/generate_decomposition_artifacts.py
+uv run python scripts/generate_report_assets.py
+\end{verbatim}
+
+The explanatory notebooks follow the analytical sequence:
+
+\begin{enumerate}
+  \item \codevar{01\_eda\_populism\_corruption.ipynb}: coverage, distributions, group contrasts,
+  and country cases;
+  \item \codevar{02\_preprocessing.ipynb}: party aggregation, coder filtering, forward-fill, join,
+  and validation;
+  \item \codevar{03\_association.ipynb}: between/within comparison, TWFE, interaction, machine
+  learning, and robustness;
+  \item \codevar{04\_causal\_direction.ipynb}: lead-lag, Granger-style tests, placebos, event studies,
+  first differences, and electoral robustness;
+  \item \codevar{05\_corruption\_decomposition.ipynb}: dimension-specific association, temporal
+  direction, FDR correction, and measurement checks.
+\end{enumerate}
+
+The automated suite contains 33 passing tests. It checks preprocessing invariants, country-bounded
+lags, duplicate keys, fixed sample construction, outcome orientation, synthetic signal recovery,
+joint tests, multiplicity correction, and robustness coverage. All report figures are generated from
+the committed panel or copied from reproducible analysis artifacts; no numerical result is transcribed
+from an unversioned spreadsheet.
+
+\section{Interpretation guide}
+
+\begin{table}[H]
+\centering
+\caption{What each reported design can and cannot establish.}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.2cm}YY}
+\toprule
+Design & Supports & Does not establish \\
+\midrule
+Pooled / between OLS & Cross-country descriptive association & Within-country effect or direction \\
+Two-way fixed effects & Same-year within-country co-movement after absorbed effects & Causal order or removal of time-varying confounding \\
+Lead-lag FE & Temporal precedence in observed annual data & Incremental prediction beyond own persistence \\
+Granger-style FE & Incremental predictive content of lagged proposed cause & Structural or intervention-based causality \\
+Event study & Dynamic pattern around defined entries/shocks & Exogenous treatment assignment \\
+First differences & Association among annual changes & Long-run level relationship \\
+XGBoost + SHAP & Held-out-country prediction and fitted feature use & Statistical significance or causal importance \\
+\bottomrule
+\end{tabularx}
+\end{table}

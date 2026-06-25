@@ -1,0 +1,202 @@
+\chapter{Data and Descriptive Evidence}
+\label{chap:data}
+
+\section{Data sources}
+
+The analysis combines two datasets from the Varieties of Democracy project. The V-Dem Country-Year
+Dataset v16 provides annual political indicators, including corruption, electoral democracy, income,
+population, and region \citep{vdem2026}. The V-Party V2 dataset provides party-level expert assessments
+of ideology and organisation at election dates, including populism and government status
+\citep{vparty2022}. V-Dem's measurement model aggregates multiple expert ratings into comparable
+latent estimates while explicitly modelling coder reliability and uncertainty
+\citep{pemstein2026}. These data offer unusually broad temporal and geographic coverage, but they remain
+expert-coded measures rather than direct administrative records.
+
+The two sources have different units of observation. V-Dem is a country-year panel. V-Party is a
+country-party-election dataset and is empirically dense only in election years. Linking them therefore
+requires substantive choices about which party represents the government and how an election-year
+score should be carried into subsequent years. \Cref{fig:design} summarises the complete workflow.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{research_design.png}
+  \caption{Research design and analytical workflow. Party-election populism scores are filtered,
+  aggregated, forward-filled, and joined to annual V-Dem outcomes before the three research questions
+  are estimated.}
+  \label{fig:design}
+\end{figure}
+
+\section{Core measures}
+
+\subsection{Governing-party populism}
+
+The primary explanatory variable is V-Party's \codevar{v2xpa\_popul}, a continuous index from 0 to 1
+constructed from people-centrism and anti-elitism. This operationalisation matches the ideational
+definition of populism as a thin-centred opposition between the people and the elite
+\citep{mudde2004}. The index measures rhetoric and party identity; it should not be read as a complete
+measure of nationalism, policy radicalism, or democratic quality.
+
+The analysis focuses on parties coded as the senior governing partner
+(\codevar{v2pagovsup = 0}), normally the prime minister's party. If a country-election has more than one
+senior governing party, their populism scores are averaged using vote shares when all weights are
+available and a simple mean otherwise. Populism is modelled continuously. The value 0.47, the 75th
+percentile in the raw governing-party distribution, is used only for descriptive labels and never as a
+regression threshold.
+
+\subsection{Political corruption}
+
+The primary outcome, \codevar{v2x\_corr}, is V-Dem's composite political corruption index. It ranges
+from 0 (cleaner) to 1 (more corrupt) and averages corruption in four institutional spheres. The
+decomposition uses executive corruption (\codevar{v2x\_execorr}), public-sector corruption
+(\codevar{v2x\_pubcorr}), legislative corruption (\codevar{v2lgcrrpt}), and judicial corruption
+(\codevar{v2jucorrdc}). The last two continuous latent estimates use the opposite source orientation:
+higher values indicate cleaner institutions. They are multiplied by $-1$ in decomposition models so
+that a positive coefficient always means more corruption.
+
+The project also constructs five-level 0--1 versions of legislative and judicial corruption from the
+ordinal ratings. These harmonised variables are useful for plots but are too coarse to be the primary
+fixed-effects outcomes: several countries never change ordinal category. The continuous latent
+estimates preserve substantially more within-country information.
+
+\begin{table}[H]
+\centering
+\caption{Variables used in the empirical analysis.}
+\label{tab:variables}
+\begin{threeparttable}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}p{3.0cm}Y>{\raggedright\arraybackslash}p{2.5cm}}
+\toprule
+Role & Variable & Interpretation & Model use \\
+\midrule
+Treatment & \texttt{populism\_}\newline\texttt{governing} & Senior governing party's continuous populism score,
+forward-filled between elections & All primary models \\
+Composite outcome & \codevar{v2x\_corr} & Political corruption, 0 cleaner to 1 more corrupt & RQ1--RQ2 \\
+Executive outcome & \codevar{v2x\_execorr} & Bribery and embezzlement by the executive & RQ3 \\
+Public-sector outcome & \codevar{v2x\_pubcorr} & Bribery and theft in public administration & RQ3 \\
+Legislative outcome & \codevar{v2lgcrrpt} & Continuous legislative corruption estimate; sign reversed in models & RQ3 \\
+Judicial outcome & \codevar{v2jucorrdc} & Continuous judicial corruption estimate; sign reversed in models & RQ3 \\
+Economic control & \codevar{log\_gdppc} & Natural logarithm of GDP per capita & FE and direction models \\
+Political control & \codevar{v2x\_polyarchy} & Electoral democracy, 0 to 1 & FE and direction models \\
+Context & \codevar{e\_regiongeo}, \codevar{e\_pop} & Region and population & Description / CV only \\
+\bottomrule
+\end{tabularx}
+\begin{tablenotes}[flushleft]\footnotesize
+\item Region is time-invariant and therefore absorbed by country fixed effects. Population is not an
+estimated control. This avoids presenting columns retained for description as if they entered the
+reported models.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\section{Panel construction}
+
+The analytical window is 1970--2019. V-Party contains records before 1970, but its expert-coded
+populism and government-status variables are unpopulated in those earlier years. Coverage ends in
+2019, so the analysis does not include the most recent populist-government episodes.
+
+The country-year panel is built in five steps:
+
+\begin{enumerate}
+  \item Restrict V-Party to senior governing parties and the 1970--2019 window.
+  \item Require more than three coders for both expert-coded components of the populism index. The
+  composite index itself has no coder-count field, so filtering its components is the appropriate
+  quality check.
+  \item Aggregate multiple senior governing parties to one country-election observation.
+  \item Forward-fill the election observation until the next coded election, without filling years
+  before a country's first observation.
+  \item Inner-join the result to V-Dem on \codevar{country\_id} and \codevar{year}; validate unique,
+  gap-free annual histories before constructing lags and leads.
+\end{enumerate}
+
+Forward-filling is necessary to align election-dated party information with annual corruption data,
+but it is also an assumption: governing-party populism is treated as constant between elections. The
+models therefore contain many annual rows but fewer genuinely distinct changes in government
+populism. Election-year and government-change-year estimates are reported as robustness checks.
+
+\begin{table}[H]
+\centering
+\caption{Sample construction and effective estimation samples.}
+\label{tab:sample}
+\small
+\begin{tabularx}{0.9\textwidth}{Yrrl}
+\toprule
+Stage & Observations & Countries & Interpretation \\
+\midrule
+Senior governing-party observations before strict coder filter & 1,628 & 163 & Election-dated source \\
+After component coder-count filter & 953 & 96 & Reliable election observations \\
+Final annual panel after forward-fill and join & 3,965 & 96 & 1970--2019 panel \\
+M1--M3 complete-case stability sample & 3,940 & 95 & Main association sample \\
+M4 sample with lagged corruption & 3,845 & 95 & Dynamic short-run model \\
+Two-lag composite direction sample & 3,750 & 95 & Main lead-lag / Granger sample \\
+Legislative outcome available & 3,770 & 95 & Structurally lower coverage \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The strict coder filter trades representation for reliability. It removes 67 countries present before
+filtering, and the resulting estimates should not be generalised automatically to countries with
+sparser expert coverage. At the same time, the panel retains 95--96 countries and up to 50 annual
+observations per country, which is substantial for a within-country design.
+
+\section{Exploratory evidence}
+
+\subsection{Distribution and trends}
+
+In the broader election-year source, governing-party populism is unimodal and right-skewed
+(mean 0.330, median 0.274, 75th percentile 0.470). There is no empirical break that would justify
+turning the index into a populist/non-populist dummy. The global mean drifts upward from roughly 0.30
+in the 1970s to 0.36 in the 2010s, but the pattern is gradual and noisy rather than a single post-2010
+break.
+
+Composite corruption is bimodal, with one cluster of clean democracies near zero and another of
+high-corruption regimes near 0.85. Regional differences are much larger than the descriptive
+high-versus-lower-populism gap: mean corruption ranges from approximately 0.05 in Western Europe and
+North America to approximately 0.85 in Central Asia. These differences motivate the separation of
+between-country and within-country variation.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{eda_distributions.png}
+  \caption{Distributions of the treatment and composite outcome in the strict modelling panel. Dashed
+  lines mark medians. These histograms describe the estimation sample and are not evidence of a causal
+  relationship.}
+  \label{fig:distributions}
+\end{figure}
+
+\subsection{Descriptive group contrasts}
+
+For presentation only, the exploratory notebook labels the top quartile of governing-party populism
+as ``high populism.'' Across 1,831 high-populism and 5,078 lower-populism country-years in the broader
+descriptive panel, all corruption measures are higher in the high-populism group. Yet Cliff's delta is
+small for every dimension (approximately 0.05--0.11). Legislative and judicial corruption show the
+largest gaps, whereas executive and public-sector corruption show the smallest. Large sample size
+makes the group differences statistically detectable; it does not make them substantively large.
+
+This descriptive result is vulnerable to confounding because it compares different countries and
+regions. It is therefore treated as motivation for RQ1 and RQ3, not as a finding about what happens
+after a country elects a more populist government.
+
+\subsection{Illustrative governing transitions}
+
+Five case studies reinforce the ambiguity. Comparing five-year average composite corruption before
+and after a documented populist entry, Venezuela increases from 0.69 to 0.87 and Hungary from 0.28 to
+0.40. Turkey changes only slightly (0.50 to 0.53), Bolivia is essentially flat (0.70 to 0.70), and
+Ecuador declines slightly (0.71 to 0.67). Venezuela, Bolivia, and Ecuador were already relatively
+corrupt before populist entry, whereas Hungary begins from a cleaner baseline and more closely
+resembles an institutional-capture narrative.
+
+The cases demonstrate why neither a before/after anecdote nor a cross-sectional correlation can
+resolve direction. Populism may precede corruption, corruption may create demand for populism, or both
+may reflect common institutional and economic shocks. The next chapter translates these alternatives
+into distinct panel estimands.
+
+\section{Measurement and data-quality risks}
+
+Four limitations are carried into the empirical design. First, V-Dem and V-Party are both
+expert-coded, so shared perceptions can induce correlated measurement error. Second, forward-filled
+populism changes mainly around elections, while corruption is extremely persistent. Third,
+legislative corruption is missing when no legislature exists, making missingness institutionally
+meaningful rather than random. Fourth, the five-level legislative and judicial ordinal measures are
+often constant within countries. The report therefore uses continuous point estimates for primary
+models, clustered inference, first-difference checks, election-based samples, and explicit diagnostics
+of within-country variation.

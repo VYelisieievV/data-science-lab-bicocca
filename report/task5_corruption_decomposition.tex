@@ -1,0 +1,87 @@
+\section{Institutional decomposition}
+\label{sec:decomposition}
+
+The composite index may conceal relationships concentrated in one institution. \Cref{tab:decomp}
+reports within-standardised M3 coefficients and primary Granger-style joint tests. Positive values are
+oriented toward more corruption for every outcome, and FDR correction covers the four subtype
+association tests and eight subtype-by-direction Granger tests.
+
+\begin{table}[H]
+\centering
+\caption{Primary corruption-dimension results.}
+\label{tab:decomp}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+& \multicolumn{2}{c}{Contemporaneous M3} & \multicolumn{2}{c}{Granger joint $p$} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Outcome & Std. $\beta$ & FDR $q$ & $P\rightarrow C$ & $C\rightarrow P$ & $N_{M3}$ \\
+\midrule
+Composite benchmark & -0.097 & -- & 0.686 & 0.241 & 3,940 \\
+Executive & 0.021 & 0.685 & 0.496 & 0.870 & 3,940 \\
+Public sector & -0.097 & 0.113 & 0.734 & 0.227 & 3,940 \\
+Legislative & -0.076 & 0.213 & \textbf{0.003} & 0.064 & 3,745 \\
+Judicial & \textbf{-0.173} & \textbf{0.009} & 0.316 & 0.251 & 3,940 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item Granger cells show raw joint $p$ values for compactness. The legislative forward-direction test
+has FDR $q=0.028$; all other subtype direction tests have $q>0.25$. The composite is a benchmark and is
+excluded from subtype FDR families.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Contemporaneous dimension results}
+
+The negative composite association is not uniform. Executive corruption is near zero
+($\widetilde{\beta}=0.021$, $q=0.685$). Public-sector and legislative corruption are negative but
+imprecise after FDR correction. Judicial corruption has the clearest negative association
+($\widetilde{\beta}=-0.173$, 95\% CI $[-0.284,-0.063]$, raw $p=0.002$, $q=0.009$).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\textwidth]{decomposition_twfe.png}
+  \caption{Controlled two-way fixed-effects association by corruption dimension. Effects are scaled by
+  within-country standard deviations so that magnitudes are comparable.}
+  \label{fig:decomposition}
+\end{figure}
+
+The common complete-case sample preserves the ranking. The judicial estimate remains negative
+($\widetilde{\beta}=-0.144$, $q=0.042$), so the result is not explained by its larger available sample.
+Its point estimate is unchanged under country, country-and-year, and Driscoll--Kraay covariance
+estimators. A contemporaneous first-difference model retains the negative sign but does not survive
+four-outcome correction (raw $p=0.033$, $q=0.134$). The coarse five-level judicial measure is also
+negative ($\widetilde{\beta}=-0.137$, $p=0.026$). The sign is therefore robust to measurement and
+inference choices, while confirmatory significance is weaker under differencing.
+
+The judicial interaction mirrors the composite: the populism slope is negative at low and median
+polyarchy and approximately zero at high polyarchy. This secondary result is consistent with
+institutional heterogeneity, but it may also reflect low within-country resolution or expert coding in
+less democratic regimes.
+
+\subsection{Dimension-specific temporal ordering}
+
+No subtype Granger test is significant after FDR except populism to legislative corruption (raw joint
+$p=0.0035$, $q=0.0279$). The lag-1 coefficient is $-0.0328$ ($p=0.236$); the lag-2 coefficient is
+$+0.0733$ (95\% CI $[0.0234,0.1231]$, $p=0.004$). In within-standardised terms, the two-year effect is
+only $+0.0234$. The reverse legislative direction does not survive multiplicity correction
+($p=0.064$, $q=0.257$).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.74\textwidth]{decomposition_granger_fdr.png}
+  \caption{FDR-adjusted joint Granger-style tests across corruption dimensions and directions. Only the
+  populism-to-legislative-corruption family falls below 0.05.}
+  \label{fig:decompgranger}
+\end{figure}
+
+The legislative signal passes the common-sample and placebo-lead checks: future populism does not
+jointly predict current legislative corruption after FDR ($q=0.239$). However, it is not confirmed by
+first differences (raw $p=0.374$), election-year observations ($p=0.701$), or government-change years
+($p=0.486$). Simpler lead-lag models retain a signal in the full and forward-fill-restricted samples.
+
+The evidence is consequently specific but fragile. A positive two-year coefficient is compatible with
+slower legislative capture, but dependence on level-based, forward-filled information prevents a
+causal interpretation. The decomposition refines the composite null result; it does not overturn it.

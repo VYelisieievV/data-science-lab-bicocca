@@ -1,0 +1,11 @@
+outcome_key,outcome,direction,joint_statistic,joint_p_value,joint_df,n_obs,n_countries,model,sample_mode,fdr_q_value,reject_fdr_05
+composite,Composite,populism_to_corruption,4.691779317225903,0.09576196876151817,2,3560,95,placebo_leads,outcome_specific,,False
+composite,Composite,corruption_to_populism,0.3467426894551348,0.8408253208141515,2,3560,95,placebo_leads,outcome_specific,,False
+executive,Executive,populism_to_corruption,0.9148069146586313,0.6329249303407096,2,3560,95,placebo_leads,outcome_specific,0.7233427775322395,False
+executive,Executive,corruption_to_populism,3.1242070248705835,0.20969451193740754,2,3560,95,placebo_leads,outcome_specific,0.2795926825832101,False
+public_sector,Public sector,populism_to_corruption,3.4406822783098523,0.1790050718554282,2,3560,95,placebo_leads,outcome_specific,0.2795926825832101,False
+public_sector,Public sector,corruption_to_populism,0.41798537072801034,0.8114011707259146,2,3560,95,placebo_leads,outcome_specific,0.8114011707259146,False
+legislative,Legislative,populism_to_corruption,4.57895164391085,0.10131955742438943,2,3388,95,placebo_leads,outcome_specific,0.23946050651949688,False
+legislative,Legislative,corruption_to_populism,8.065036192546954,0.017729628784183854,2,3276,95,placebo_leads,outcome_specific,0.11666100096629008,False
+judicial,Judicial,populism_to_corruption,7.069554677223982,0.02916525024157252,2,3560,95,placebo_leads,outcome_specific,0.11666100096629008,False
+judicial,Judicial,corruption_to_populism,4.245027911996779,0.11973025325974844,2,3560,95,placebo_leads,outcome_specific,0.23946050651949688,False

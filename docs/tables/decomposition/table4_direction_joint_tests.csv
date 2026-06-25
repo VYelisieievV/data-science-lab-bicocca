@@ -1,0 +1,41 @@
+outcome_key,outcome,direction,model,sample_mode,joint_statistic,joint_p_value,joint_df,within_r2,n_obs,n_countries,country_fe,year_fe,clustered_by_country,fdr_q_value,reject_fdr_05
+composite,Composite,populism_to_corruption,lead_lag,outcome_specific,4.639750187983557,0.0982858613322931,2,-0.1834257162664643,3750,95,True,True,True,,False
+composite,Composite,populism_to_corruption,granger,outcome_specific,0.7531937989332922,0.6861926227659976,2,0.8861669143360968,3750,95,True,True,True,,False
+composite,Composite,corruption_to_populism,lead_lag,outcome_specific,5.980906066604313,0.05026465999977277,2,-0.006624558673355985,3750,95,True,True,True,,False
+composite,Composite,corruption_to_populism,granger,outcome_specific,2.848314481228381,0.24071123940684808,2,0.6985390082518574,3750,95,True,True,True,,False
+executive,Executive,populism_to_corruption,lead_lag,outcome_specific,0.3033247979184693,0.85927832503558,2,-0.07898733220237575,3750,95,True,True,True,0.85927832503558,False
+executive,Executive,populism_to_corruption,granger,outcome_specific,1.403073768143995,0.495822695917679,2,0.8569156035246908,3750,95,True,True,True,0.6610969278902387,False
+executive,Executive,corruption_to_populism,lead_lag,outcome_specific,1.620420298094833,0.44476458954645015,2,-0.0011970854726652824,3750,95,True,True,True,0.5083023880530859,False
+executive,Executive,corruption_to_populism,granger,outcome_specific,0.27921779368383126,0.869698310648094,2,0.6984804631273929,3750,95,True,True,True,0.869698310648094,False
+public_sector,Public sector,populism_to_corruption,lead_lag,outcome_specific,3.7454655526922633,0.15370305129674386,2,-0.20969266854358182,3750,95,True,True,True,0.2332589833021084,False
+public_sector,Public sector,populism_to_corruption,granger,outcome_specific,0.6177766710423965,0.7342627565166988,2,0.8732770970812895,3750,95,True,True,True,0.8391574360190843,False
+public_sector,Public sector,corruption_to_populism,lead_lag,outcome_specific,5.042118748742508,0.08037441503714651,2,-0.008081467196774161,3750,95,True,True,True,0.16074883007429303,False
+public_sector,Public sector,corruption_to_populism,granger,outcome_specific,2.968307655599743,0.2266940817719649,2,0.6984888696936711,3750,95,True,True,True,0.5023068865568812,False
+legislative,Legislative,populism_to_corruption,lead_lag,outcome_specific,8.046625022966836,0.01789359392485177,2,-0.13816281476165226,3576,95,True,True,True,0.04771625046627139,True
+legislative,Legislative,populism_to_corruption,granger,outcome_specific,11.314820530893247,0.003491547380784979,2,0.8703821000615383,3501,95,True,True,True,0.02793237904627983,True
+legislative,Legislative,corruption_to_populism,lead_lag,outcome_specific,3.4865759976541026,0.1749442374765813,2,0.0022977629873609517,3527,95,True,True,True,0.2332589833021084,False
+legislative,Legislative,corruption_to_populism,granger,outcome_specific,5.492984920544609,0.06415248442673888,2,0.694159079055304,3527,95,True,True,True,0.2566099377069555,False
+judicial,Judicial,populism_to_corruption,lead_lag,outcome_specific,8.79889203302401,0.012284143230942901,2,-0.04252061352247272,3750,95,True,True,True,0.04771625046627139,True
+judicial,Judicial,populism_to_corruption,granger,outcome_specific,2.3035164128888828,0.3160805456919066,2,0.8666935291656886,3750,95,True,True,True,0.5057288731070505,False
+judicial,Judicial,corruption_to_populism,lead_lag,outcome_specific,9.82096938324635,0.0073689158138864315,2,0.013073489562138274,3750,95,True,True,True,0.04771625046627139,True
+judicial,Judicial,corruption_to_populism,granger,outcome_specific,2.763382397665043,0.2511534432784406,2,0.6987148771481504,3750,95,True,True,True,0.5023068865568812,False
+composite,Composite,populism_to_corruption,lead_lag,common,4.572318217872221,0.10165616322345651,2,-0.1603999761037187,3576,95,True,True,True,,False
+composite,Composite,populism_to_corruption,granger,common,1.5177439244634097,0.46819427006001624,2,0.8997431453040539,3501,95,True,True,True,,False
+composite,Composite,corruption_to_populism,lead_lag,common,5.232443741175422,0.07307844172334171,2,-7.667228686591976e-05,3527,95,True,True,True,,False
+composite,Composite,corruption_to_populism,granger,common,4.59979450931473,0.10026914538126884,2,0.6940208035178692,3527,95,True,True,True,,False
+executive,Executive,populism_to_corruption,lead_lag,common,0.3590698409002305,0.8356587688532837,2,-0.06311523351164916,3576,95,True,True,True,0.8356587688532837,False
+executive,Executive,populism_to_corruption,granger,common,1.4258720145870234,0.4902028434597263,2,0.8580861427210906,3501,95,True,True,True,0.6536037912796351,False
+executive,Executive,corruption_to_populism,lead_lag,common,1.2670857970496585,0.5307082209375432,2,0.005035826936268806,3527,95,True,True,True,0.6065236810714779,False
+executive,Executive,corruption_to_populism,granger,common,0.5361946727549043,0.7648333313737589,2,0.6939251742546124,3527,95,True,True,True,0.7648333313737589,False
+public_sector,Public sector,populism_to_corruption,lead_lag,common,3.877283094602595,0.14389929745133878,2,-0.1723697032909952,3576,95,True,True,True,0.23023887592214204,False
+public_sector,Public sector,populism_to_corruption,granger,common,1.5061772030340927,0.47090985143256403,2,0.8773783374895356,3501,95,True,True,True,0.6536037912796351,False
+public_sector,Public sector,corruption_to_populism,lead_lag,common,4.862415950068141,0.0879305504925139,2,-1.6680329830931484e-05,3527,95,True,True,True,0.1758611009850278,False
+public_sector,Public sector,corruption_to_populism,granger,common,2.908597181694356,0.23356413047963798,2,0.6939435667916796,3527,95,True,True,True,0.46712826095927595,False
+legislative,Legislative,populism_to_corruption,lead_lag,common,8.046625022966836,0.01789359392485177,2,-0.13816281476165226,3576,95,True,True,True,0.09469773371204344,False
+legislative,Legislative,populism_to_corruption,granger,common,11.314820530893247,0.003491547380784979,2,0.8703821000615383,3501,95,True,True,True,0.02793237904627983,True
+legislative,Legislative,corruption_to_populism,lead_lag,common,3.4865759976541026,0.1749442374765813,2,0.0022977629873609517,3527,95,True,True,True,0.2332589833021084,False
+legislative,Legislative,corruption_to_populism,granger,common,5.492984920544609,0.06415248442673888,2,0.694159079055304,3527,95,True,True,True,0.2566099377069555,False
+judicial,Judicial,populism_to_corruption,lead_lag,common,6.078985921622519,0.04785914980770607,2,-0.011011217631501369,3576,95,True,True,True,0.12762439948721618,False
+judicial,Judicial,populism_to_corruption,granger,common,1.0130938763259048,0.6025727113484101,2,0.8737380470978767,3501,95,True,True,True,0.6886545272553258,False
+judicial,Judicial,corruption_to_populism,lead_lag,common,7.486719142862746,0.02367443342801086,2,0.014849548444371807,3527,95,True,True,True,0.09469773371204344,False
+judicial,Judicial,corruption_to_populism,granger,common,2.909198096519024,0.2334939649467852,2,0.6941924527827233,3527,95,True,True,True,0.46712826095927595,False

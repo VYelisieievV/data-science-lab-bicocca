@@ -1,0 +1,229 @@
+\chapter{Results and Discussion}
+\label{chap:results}
+
+\section{Where does the positive descriptive association come from?}
+
+The exploratory comparison suggests that country-years governed by highly populist parties are more
+corrupt. The model comparison shows why that pattern should not be interpreted as a within-country
+effect. Pooled OLS gives a positive populism coefficient of 0.145 (95\% CI $[-0.024,0.315]$,
+$p=0.093$). The between-country estimate is larger at 0.226, but also imprecise (95\% CI
+$[-0.065,0.516]$, $p=0.127$). Once country effects are introduced, the sign flips: the country-FE
+estimate is $-0.065$ and the two-way FE estimate is $-0.068$. Neither single-predictor within estimate
+is significant at 5\%, but their signs are stable.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\textwidth]{between_within.png}
+  \caption{Between-versus-within comparison. Positive pooled and between-country point estimates
+  become negative in country fixed-effects models; all four single-predictor estimates are imprecise
+  after dependence-adjusted inference.}
+  \label{fig:betweenwithin}
+\end{figure}
+
+The evidence therefore supports a careful formulation: countries with more populist governments tend
+to have higher average corruption, but the estimate is uncertain and does not survive the shift to a
+within-country comparison. Stable regional and institutional differences plausibly account for much
+of the descriptive association.
+
+\section{Composite corruption: controlled association}
+
+\Cref{tab:twfe} presents the nested fixed-effects models. Adding log GDP per capita makes the negative
+coefficient marginally more precise; adding electoral democracy leaves it close to $-0.064$. M2 and
+M3 exclude zero at the 5\% level. The sign does not support the hypothesised positive same-year
+relationship.
+
+\begin{table}[H]
+\centering
+\caption{Two-way fixed-effects association models for composite corruption.}
+\label{tab:twfe}
+\begin{threeparttable}
+\small
+\begin{tabular}{llrrrr}
+\toprule
+Model & Added terms & Populism coefficient & 95\% CI & $p$ & Within-\Rtwo{} \\
+\midrule
+M1 & Country + year FE & -0.0677 & $[-0.139,\ 0.004]$ & 0.064 & 0.010 \\
+M2 & + log GDP per capita & -0.0715 & $[-0.141,\ -0.002]$ & 0.043 & -0.059 \\
+M3 & + electoral democracy & -0.0638 & $[-0.123,\ -0.004]$ & 0.036 & -0.196 \\
+M4 & + lagged corruption & -0.0033 & $[-0.016,\ 0.010]$ & 0.615 & 0.885 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item M1--M3 use the same 3,940 observations and 95 countries. M4 uses 3,845 observations and answers a
+different short-run question after accounting for outcome persistence. Negative within-
+\Rtwo{} can occur because the reported metric compares the transformed fit with a benchmark; it does
+not reverse the coefficient interpretation.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{association_stability.png}
+  \caption{Stability of the populism coefficient across the static M1--M3 specifications. Country-
+  clustered 95\% confidence intervals are shown.}
+  \label{fig:stability}
+\end{figure}
+
+The coefficient is statistically detectable in the main controlled model but substantively small. A
+one-within-country-standard-deviation increase in governing-party populism corresponds to an estimated
+0.010 reduction in the 0--1 corruption index. This is approximately 3\% of the overall corruption
+standard deviation, or 10\% of its within-country standard deviation. A typical election-to-election
+change implies an even smaller movement.
+
+Inference is stable under country-and-year clustering and Driscoll--Kraay standard errors. First
+differences remain negative ($-0.024$) but are not distinguishable from zero ($p=0.195$). Alternative
+government aggregations and originally proposed institutional controls also retain the negative sign
+but reduce precision. The appropriate summary is therefore \emph{sign-robust but not
+significance-robust}; it is not evidence that populism causes lower corruption.
+
+\subsection{Heterogeneity by electoral democracy}
+
+The populism-democracy interaction is statistically meaningful. The model-implied populism slope is
+$-0.164$ at the 10th percentile of polyarchy and $-0.076$ at the median, with confidence intervals
+excluding zero. At the 90th percentile it is $+0.027$ and imprecise. The negative same-year pattern is
+therefore concentrated in less democratic contexts. This could represent genuine institutional
+heterogeneity, but it could also reflect expert coding, regime trajectories, or conditioning on a
+variable partly affected by populist government. We treat it as descriptive moderation rather than a
+causal mechanism.
+
+\subsection{Non-linear predictive benchmark}
+
+The country-held-out XGBoost model obtains out-of-fold \Rtwo{} around 0.45, compared with 0.38 for a
+linear model on the same folds. Nested tuning increases XGBoost performance to approximately 0.51 and
+selects shallow, regularised trees. In both untuned and tuned fits, populism is the least important of
+the three predictors; electoral democracy and GDP dominate SHAP importance.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.72\textwidth]{shap_importance.png}
+  \caption{Out-of-fold XGBoost feature importance. SHAP magnitude describes model use, not statistical
+  significance or causality.}
+  \label{fig:shap}
+\end{figure}
+
+This benchmark reinforces a limited conclusion: even a flexible model that is allowed to use
+between-country information relies relatively little on populism to predict corruption.
+
+\section{Temporal direction for composite corruption}
+
+The simple two-lag populism-to-corruption model gives a negative lag-1 coefficient of $-0.048$
+($p=0.031$) and a near-zero lag-2 coefficient. This is opposite to the hypothesised positive delayed
+effect. In the reverse model, neither corruption lag is individually clear. Once the dependent
+variable's own history is included, the primary Granger-style joint tests do not reject either null:
+
+\begin{itemize}
+  \item populism $\rightarrow$ corruption: joint $p=0.686$;
+  \item corruption $\rightarrow$ populism: joint $p=0.241$.
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.76\textwidth]{causal_direction.png}
+  \caption{Controlled lead-lag coefficients in both proposed directions. The simple lag-1
+  populism-to-corruption estimate is negative, but the stricter joint Granger-style test is null.}
+  \label{fig:direction}
+\end{figure}
+
+Placebo leads do not provide a strong warning: future corruption terms jointly have $p=0.841$ in the
+reverse model, and future populism terms have $p=0.096$ in the forward model. First differences are
+also null in both directions. AIC and BIC weakly favour one-year Granger windows, but longer-window
+comparisons use progressively smaller samples and are not treated as model-selection evidence.
+
+\subsection{Event-study evidence}
+
+The populist-entry event study identifies 45 events. Pre-event coefficients are jointly null
+($p=0.983$), which is consistent with no detectable pre-trend, but post-entry coefficients are also
+jointly null ($p=0.228$). The estimates do not reveal a statistically detectable corruption increase
+after entry.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth]{populist_entry_event.png}
+  \caption{Composite corruption around populist entry. Event time $-1$ is the reference. Neither the
+  pre-trend nor post-entry joint test is significant.}
+  \label{fig:event}
+\end{figure}
+
+The reverse corruption-shock event study finds a post-event joint signal, but governing populism is
+already elevated before the shock and the pre-trend test is borderline. The sequence is therefore more
+consistent with political episodes in which both variables cluster than with a clean corruption-first
+mechanism.
+
+Taken together, the directional evidence does not support a robust temporal effect for the composite
+index. The small negative same-year association should not be converted into a claim about temporal
+causation.
+
+\input{task5_corruption_decomposition}
+
+\section{Discussion}
+
+Three findings matter. First, the eye-catching positive cross-country relationship is an imprecise
+between-country pattern. It reverses sign in within-country models, indicating that stable differences
+between countries are central. This is consistent with the very large regional and regime-type gaps
+observed in the exploratory analysis.
+
+Second, the composite panel does not reveal a robust temporal direction. Populism and corruption are
+both persistent and may respond to the same political shocks. The event and placebo designs do not
+support a general sequence in which populist entry is followed by rising corruption, nor one in which
+corruption reliably brings populists to office. This absence of evidence describes what these annual
+panel designs can detect; it is not proof that every causal effect is exactly zero.
+
+Third, aggregation matters. Judicial corruption produces the strongest negative contemporaneous
+association, while legislative corruption produces the only positive delayed signal. Neither pattern
+justifies a simple causal story. The judicial result may capture coding and regime context, especially
+because it is strongest at low democracy. The legislative result is theoretically compatible with
+slower institutional capture \citep{chesterley2018,batory2016}, but its failure in first-difference and
+election-only samples makes it provisional.
+
+The results also caution against interpreting anti-corruption rhetoric as either proof of cleaner
+government or proof of hidden corruption. Populism is a broad political style and ideology whose
+institutional consequences vary with constraints, party organisation, and democratic context
+\citep{guriev2022,huber2017}. Average panel effects can obscure that heterogeneity.
+
+\section{Limitations}
+
+\begin{enumerate}
+  \item \textbf{Observational identification.} Fixed effects remove time-invariant confounders and
+  year shocks, not unobserved country-specific changes. None of the models constitutes a natural
+  experiment.
+  \item \textbf{Measurement.} Both treatment and outcomes are expert-coded. Shared perceptions,
+  retrospective coding, and reduced resolution in some countries can induce correlated error.
+  \item \textbf{Forward-fill assumption.} Populism is held constant between elections. Annual sample
+  size overstates the number of distinct political changes, and election-only estimates are less
+  precise.
+  \item \textbf{Persistence and dynamics.} Near-unit outcome persistence complicates level-based
+  Granger tests. Dynamic fixed effects may be biased in finite panels, while first differences can be
+  noisy.
+  \item \textbf{Sample selection.} Strict coder filtering improves reliability but reduces coverage
+  from 163 to 96 countries. Legislative missingness is linked to the existence of legislatures.
+  \item \textbf{Temporal scope.} The analysis ends in 2019 and cannot evaluate the most recent wave of
+  populist governments.
+  \item \textbf{Multiplicity and dependence.} FDR correction limits false discoveries, but corruption
+  dimensions are correlated and the legislative signal remains one result among several related
+  specifications.
+  \item \textbf{Average effects.} Country-level averages cannot identify heterogeneous effects by
+  ideology, coalition structure, leader, or constitutional system without further design choices.
+\end{enumerate}
+
+\section{Conclusion}
+
+This study asked whether governing-party populism is associated with political corruption, which
+variable comes first, and which institution is most affected. A simple positive answer does not
+survive the analytical sequence. The pooled and between-country coefficients are positive but
+imprecise. The main within-country coefficient is small and negative, significant in controlled
+static models but not under every robustness transformation. Composite lead-lag, Granger, event-study,
+and first-difference evidence provides no robust temporal direction.
+
+The institutional decomposition adds two qualifications. Judicial corruption shows the strongest
+negative same-year association, particularly at lower democracy levels. Legislative corruption shows
+a small positive two-year signal after the outcome's own history and multiplicity are considered, but
+that result is not confirmed in first differences or election-only samples. The most defensible
+conclusion is therefore a negative and nuanced one: the data do not support a broad claim that
+populist government systematically raises political corruption, though a fragile delayed legislative
+channel merits further research.
+
+Future work should exploit quasi-experimental changes in governing coalitions, explicitly model
+election timing and tenure, distinguish ideological families of populism, and combine expert indices
+with administrative corruption outcomes. Those extensions would be better positioned to separate
+institutional capture from perception, selection, and common political shocks.
